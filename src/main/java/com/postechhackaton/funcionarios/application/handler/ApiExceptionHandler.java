@@ -1,0 +1,42 @@
+package com.postechhackaton.funcionarios.application.handler;
+
+import com.postechhackaton.funcionarios.application.dto.ExceptionResponse;
+import com.postechhackaton.funcionarios.business.exceptions.NotFoundException;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MissingRequestHeaderException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+@ControllerAdvice
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class ApiExceptionHandler {
+
+    @ExceptionHandler(NotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleTo(NotFoundException e) {
+        return new ResponseEntity<>(new ExceptionResponse(ExceptionResponse.ErrorType.RESOURCE_NOT_FOUND,
+                e.getMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public final ResponseEntity<ExceptionResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        return new ResponseEntity<>(new ExceptionResponse(ExceptionResponse.ErrorType.VALIDATION_FAILURE,
+                e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    public final ResponseEntity<ExceptionResponse> handleHttpMessageNotReadableException(MissingRequestHeaderException e) {
+        return new ResponseEntity<>(new ExceptionResponse(ExceptionResponse.ErrorType.VALIDATION_FAILURE,
+                e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public final ResponseEntity<ExceptionResponse> handleGenericException(Exception e) {
+        return new ResponseEntity<>(new ExceptionResponse(ExceptionResponse.ErrorType.GENERIC_SERVER_ERROR,
+                "Erro inesperado encontrado no servidor durante o processamento da solicitação"), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+}
