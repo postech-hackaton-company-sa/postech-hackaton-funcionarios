@@ -26,6 +26,6 @@ public class DocsConfig {
                         .description(appDescription)
                         .contact(new Contact().name("Daniel Maria da Silva").url("https://github.com/postech-hackaton-company-sa"))
                         .license(new License().name("MIT License").url("https://opensource.org/licenses/MIT"))
-                        .version("1.0.0-POC"));
+                        .version("1.0.0"));
     }
 }
