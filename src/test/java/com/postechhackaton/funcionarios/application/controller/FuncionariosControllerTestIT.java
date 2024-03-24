@@ -1,9 +1,11 @@
 package com.postechhackaton.funcionarios.application.controller;
 
 import com.postechhackaton.funcionarios.infra.entities.Funcionario;
+import com.postechhackaton.funcionarios.infra.gateways.CredentialGatewayImpl;
 import com.postechhackaton.funcionarios.infra.repositories.FuncionarioRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +24,9 @@ class FuncionariosControllerTestIT {
     @Autowired
     private MockMvc mockMvc;
 
+    @Mock
+    private CredentialGatewayImpl credentialGateway;
+
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
@@ -34,7 +39,8 @@ class FuncionariosControllerTestIT {
         funcionarioRepository.save(funcionario);
 
         mockMvc.perform(get("/v1/funcionarios?username=user-1")
-                        .header("username", "user"))
+                        .header("username", "user")
+                        .header("roles", "admin"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].username").value("user-1"));
     }
@@ -42,7 +48,8 @@ class FuncionariosControllerTestIT {
     @Test
     void testBuscarFuncionarios_deveRetornar200_quandoNaoExistirUsuario() throws Exception {
         mockMvc.perform(get("/v1/funcionarios?username=user-2")
-                        .header("username", "user"))
+                        .header("username", "user")
+                        .header("roles", "admin"))
                 .andExpect(status().isOk());
     }
 }

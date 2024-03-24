@@ -89,7 +89,7 @@ public class FuncionariosController {
                     }),
     })
     public List<FuncionarioResponseDto> buscarFuncionarios(@RequestHeader("username") String usuario,
-                                                      @RequestParam(value = "username", required = false) String queryUsername) {
+                                @RequestParam(value = "username", required = false) String queryUsername) {
         log.info("Usuario {} requisitou uma busca de funcionarios", usuario);
         List<FuncionarioEntity> resposta =  buscarUseCase.execute(queryUsername);
         return funcionarioMapper.toDtoList(resposta);
