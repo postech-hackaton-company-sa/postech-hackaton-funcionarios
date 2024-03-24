@@ -23,12 +23,14 @@ public class FuncionariosDatabaseGatewayImpl implements FuncionariosDatabaseGate
 
     @Override
     public void salvar(FuncionarioEntity entity) {
+        log.info("Salvando usuario");
         Funcionario funcionario = funcionarioMapper.toDbEntity(entity);
         funcionarioRepository.save(funcionario);
     }
 
     @Override
     public List<FuncionarioEntity> buscarPorExemplo(Example<Funcionario> example) {
+        log.debug("Buscando usuario");
         List<Funcionario> funcionarios = funcionarioRepository.findAll(example);
         return funcionarioMapper.toEntityList(funcionarios);
     }
