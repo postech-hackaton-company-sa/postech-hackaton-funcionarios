@@ -13,7 +13,6 @@ public class FuncionarioResponseDto {
     private String nome;
     private String sobrenome;
     private String username;
-    private List<String> roles;
     private String cpf;
     private String telefone;
     private String email;
