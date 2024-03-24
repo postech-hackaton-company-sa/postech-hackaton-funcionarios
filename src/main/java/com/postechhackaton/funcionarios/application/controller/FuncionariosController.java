@@ -66,7 +66,7 @@ public class FuncionariosController {
                     )
             }),
     })
-    public FuncionarioResponseDto cadastrar(@RequestHeader("usuario") String usuario,
+    public FuncionarioResponseDto cadastrar(@RequestHeader("username") String usuario,
                                             @RequestHeader("roles") @Pattern(regexp = ".*admin.*", message = "Apenas administradores podem cadastrar funcionarios") String roles,
                                             @Valid @RequestBody @Parameter(description = "Objeto de criacao de funcionarios", required = true) CadastroFuncionarioDto cadastroFuncionarioDto) {
         FuncionarioEntity funcionario = funcionarioMapper.toEntity(cadastroFuncionarioDto, usuario);
