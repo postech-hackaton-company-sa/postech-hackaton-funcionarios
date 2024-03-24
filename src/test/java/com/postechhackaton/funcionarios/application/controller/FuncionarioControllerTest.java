@@ -34,13 +34,9 @@ public class FuncionarioControllerTest {
     @Test
     void buscarUsuarios_deveRetornarUsuarios() {
         when(buscarUseCase.execute(anyString())).thenReturn(List.of(new FuncionarioEntity()));
-        List<FuncionarioResponseDto> funcionarioResponseDtos = funcionariosController.buscarFuncionarios("user", "admin", "query");
+        List<FuncionarioResponseDto> funcionarioResponseDtos = funcionariosController.buscarFuncionarios("user", "query");
         assertNotNull(funcionarioResponseDtos);
         assertEquals(1, funcionarioResponseDtos.size());
     }
 
-    @Test
-    void cadastrarUsuario_deveCadastrarUsuarioERetonar() {
-
-    }
 }
